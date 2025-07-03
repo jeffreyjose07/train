@@ -31,10 +31,11 @@ public class RouteService {
 
         VALID_STATIONS_AFTER_HYB = new LinkedHashSet<>(DISTANCE_FROM_HYB.keySet());
 
-        SORT_ORDER = DISTANCE_FROM_HYB.entrySet().stream()
+        List<String> order = DISTANCE_FROM_HYB.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
+        SORT_ORDER = Collections.unmodifiableList(order);
     }
 
     /**
