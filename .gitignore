@@ -3,3 +3,11 @@ target/*
 .DS_Store
 
 .idea/
+out
+out_test
+sources.txt
+test_sources.txt
+junit-jupiter-api-5.7.1.jar
+junit-jupiter-params-5.7.1.jar
+junit-jupiter-engine-5.7.1.jar
+junit-platform-console-standalone-1.7.1.jar
