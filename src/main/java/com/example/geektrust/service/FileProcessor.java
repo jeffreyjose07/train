@@ -19,8 +19,9 @@ public class FileProcessor {
             while ((line = reader.readLine()) != null) {
                 trains.add(processLineAndReturnTrain(line.trim()));
             }
+            trainService.validateTrains(trains);
             trainService.generateOutput(trains);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.err.println("Error reading input file: " + e.getMessage());
         }
     }

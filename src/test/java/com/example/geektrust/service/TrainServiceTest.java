@@ -47,4 +47,16 @@ class TrainServiceTest {
         assertEquals("ARRIVAL TRAIN_B ENGINE PTA", lines[1].trim());
         assertEquals("DEPARTURE TRAIN_AB ENGINE ENGINE GHY PTA NDL", lines[2].trim());
     }
+
+    @Test
+    void generateOutputShouldPrintJourneyEndedWhenNoBogiesRemain() {
+        outContent.reset();
+        Train a = new Train(TrainConstants.TRAIN_A, Arrays.asList("ENGINE"));
+        Train b = new Train(TrainConstants.TRAIN_B, Arrays.asList("ENGINE"));
+        service.generateOutput(Arrays.asList(a, b));
+        String[] lines = outContent.toString().trim().split("\n");
+        assertEquals("ARRIVAL TRAIN_A ENGINE", lines[0].trim());
+        assertEquals("ARRIVAL TRAIN_B ENGINE", lines[1].trim());
+        assertEquals("JOURNEY_ENDED", lines[2].trim());
+    }
 }
