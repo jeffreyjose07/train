@@ -17,6 +17,9 @@ public class TrainService {
         if (tokens == null || tokens.isEmpty()) {
             throw new IllegalArgumentException("Input tokens cannot be null or empty");
         }
+        if (tokens.size() < 2 || !TrainConstants.ENGINE.equals(tokens.get(1))) {
+            throw new IllegalArgumentException("Invalid format: first bogie must be ENGINE");
+        }
         String trainId = tokens.get(0);
         List<String> bogies = new ArrayList<>(tokens.subList(1, tokens.size()));
 
@@ -33,6 +36,14 @@ public class TrainService {
                 .filter(t -> id.equals(t.getTrainId()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Missing train " + id));
+    }
+
+    public void validateTrains(List<Train> trains) {
+        boolean hasA = trains.stream().anyMatch(t -> TrainConstants.TRAIN_A.equals(t.getTrainId()));
+        boolean hasB = trains.stream().anyMatch(t -> TrainConstants.TRAIN_B.equals(t.getTrainId()));
+        if (!hasA || !hasB) {
+            throw new IllegalArgumentException("Input must contain both TRAIN_A and TRAIN_B");
+        }
     }
 
     public void generateOutput(List<Train> trains) {
