@@ -12,14 +12,11 @@ import java.util.List;
 public class TrainService {
     private final RouteService routeService = new RouteService();
     private final TrainMerger trainMerger = new TrainMerger();
+    private final ValidationService validationService = new ValidationService();
+    private final PrinterService printerService = new PrinterService();
 
     public Train createTrain(List<String> tokens) {
-        if (tokens == null || tokens.isEmpty()) {
-            throw new IllegalArgumentException("Input tokens cannot be null or empty");
-        }
-        if (tokens.size() < 2 || !TrainConstants.ENGINE.equals(tokens.get(1))) {
-            throw new IllegalArgumentException("Invalid format: first bogie must be ENGINE");
-        }
+        validationService.validateTrainTokens(tokens);
         String trainId = tokens.get(0);
         List<String> bogies = new ArrayList<>(tokens.subList(1, tokens.size()));
 
@@ -39,11 +36,7 @@ public class TrainService {
     }
 
     public void validateTrains(List<Train> trains) {
-        boolean hasA = trains.stream().anyMatch(t -> TrainConstants.TRAIN_A.equals(t.getTrainId()));
-        boolean hasB = trains.stream().anyMatch(t -> TrainConstants.TRAIN_B.equals(t.getTrainId()));
-        if (!hasA || !hasB) {
-            throw new IllegalArgumentException("Input must contain both TRAIN_A and TRAIN_B");
-        }
+        validationService.ensureBothTrainsPresent(trains);
     }
 
     public void generateOutput(List<Train> trains) {
@@ -53,14 +46,14 @@ public class TrainService {
         Train arrivalA = filterArrivalTrain(trainA);
         Train arrivalB = filterArrivalTrain(trainB);
 
-        System.out.println("ARRIVAL " + arrivalA.getTrainId() + " " + arrivalA);
-        System.out.println("ARRIVAL " + arrivalB.getTrainId() + " " + arrivalB);
+        printerService.printArrival(arrivalA);
+        printerService.printArrival(arrivalB);
 
         Train departure = trainMerger.merge(arrivalA, arrivalB);
         if (departure.getBogies().size() <= 2) {
-            System.out.println("JOURNEY_ENDED");
+            printerService.printJourneyEnded();
         } else {
-            System.out.println("DEPARTURE " + departure.getTrainId() + " " + departure);
+            printerService.printDeparture(departure);
         }
     }
 }
