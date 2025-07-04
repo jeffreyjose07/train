@@ -42,22 +42,18 @@ public class RouteService {
      * Filters out bogies that are not valid for the route after Hyderabad.
      */
     public List<String> filterValidBogies(List<String> bogies) {
-        List<String> filtered = new ArrayList<>();
-        for (String bogie : bogies) {
-            if (TrainConstants.ENGINE.equals(bogie) || VALID_STATIONS_AFTER_HYB.contains(bogie)) {
-                filtered.add(bogie);
-            }
-        }
-        return filtered;
+        return bogies.stream()
+                .filter(b -> TrainConstants.ENGINE.equals(b) || VALID_STATIONS_AFTER_HYB.contains(b))
+                .collect(Collectors.toList());
     }
 
     /**
      * Orders bogies based on distance from Hyderabad. Farthest station first.
      */
     public List<String> sortBogies(List<String> bogies) {
-        List<String> sortable = new ArrayList<>(bogies);
-        sortable.sort(Comparator.comparingInt(DISTANCE_FROM_HYB::get).reversed());
-        return sortable;
+        return bogies.stream()
+                .sorted(Comparator.comparingInt(DISTANCE_FROM_HYB::get).reversed())
+                .collect(Collectors.toList());
     }
 
     public List<String> getSortOrder() {
