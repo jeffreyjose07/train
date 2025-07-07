@@ -3,20 +3,22 @@ package com.example.geektrust.model;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.geektrust.util.MaintainabilityConstants;
+
 public class Route {
     private static final Map<String, Station> STATIONS = new HashMap<>();
     
     static {
         STATIONS.put("ENGINE", new Station("ENGINE"));
         STATIONS.put("HYB", new Station("HYB"));
-        STATIONS.put("NGP", new Station("NGP", 400));
-        STATIONS.put("ITJ", new Station("ITJ", 700));
-        STATIONS.put("BPL", new Station("BPL", 800));
-        STATIONS.put("AGA", new Station("AGA", 1300));
-        STATIONS.put("NDL", new Station("NDL", 1500));
-        STATIONS.put("PTA", new Station("PTA", 1800));
-        STATIONS.put("NJP", new Station("NJP", 2200));
-        STATIONS.put("GHY", new Station("GHY", 2700));
+        STATIONS.put("NGP", new Station("NGP", MaintainabilityConstants.NGP_DISTANCE_FROM_HYB));
+        STATIONS.put("ITJ", new Station("ITJ", MaintainabilityConstants.ITJ_DISTANCE_FROM_HYB));
+        STATIONS.put("BPL", new Station("BPL", MaintainabilityConstants.BPL_DISTANCE_FROM_HYB));
+        STATIONS.put("AGA", new Station("AGA", MaintainabilityConstants.AGA_DISTANCE_FROM_HYB));
+        STATIONS.put("NDL", new Station("NDL", MaintainabilityConstants.NDL_DISTANCE_FROM_HYB));
+        STATIONS.put("PTA", new Station("PTA", MaintainabilityConstants.PTA_DISTANCE_FROM_HYB));
+        STATIONS.put("NJP", new Station("NJP", MaintainabilityConstants.NJP_DISTANCE_FROM_HYB));
+        STATIONS.put("GHY", new Station("GHY", MaintainabilityConstants.GHY_DISTANCE_FROM_HYB));
     }
 
     public static Station getStation(String code) {

@@ -3,11 +3,13 @@ package com.example.geektrust.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.geektrust.util.MaintainabilityConstants;
+
 public class TrainComposer {
 
     public static List<Bogie> composeMergedTrain(List<Bogie> sortedBogies) {
         return new TrainBuilder()
-                .addEngines(2)
+                .addEngines(MaintainabilityConstants.ENGINES_IN_MERGED_TRAIN)
                 .addBogies(sortedBogies)
                 .build();
     }

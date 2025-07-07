@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import com.example.geektrust.util.MaintainabilityConstants;
 
 class TrainTest
 
@@ -28,7 +29,8 @@ class TrainTest
     void trainShouldFilterValidBogiesForDeparture() {
         Train train = Train.createFromTokens("TRAIN_A", Arrays.asList("ENGINE", "NDL", "HYB", "PTA"));
         Train arrival = train.prepareForArrivalAtHyderabad();
-        assertEquals(3, arrival.getBogiesForDeparture().size()); // HYB filtered out
+        int expectedBogieCount = MaintainabilityConstants.MINIMUM_BOGIES_FOR_JOURNEY + 1; // ENGINE, NDL, PTA
+        assertEquals(expectedBogieCount, arrival.getBogiesForDeparture().size()); // HYB filtered out
     }
 
     @Test

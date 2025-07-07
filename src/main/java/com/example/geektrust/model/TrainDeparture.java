@@ -1,6 +1,7 @@
 package com.example.geektrust.model;
 
 import com.example.geektrust.util.TrainConstants;
+import com.example.geektrust.util.MaintainabilityConstants;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class TrainDeparture {
     }
 
     private static boolean hasInsufficientBogies(List<Bogie> bogies) {
-        return bogies.size() <= 2; // Only engines, no passenger bogies
+        return bogies.size() <= MaintainabilityConstants.MINIMUM_BOGIES_FOR_JOURNEY;
     }
 
     private static Train createMergedTrain(List<Bogie> bogies) {

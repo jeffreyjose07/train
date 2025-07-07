@@ -5,6 +5,7 @@ import com.example.geektrust.model.Journey;
 import com.example.geektrust.model.TrainArrival;
 import com.example.geektrust.model.TrainDeparture;
 import com.example.geektrust.util.TrainConstants;
+import com.example.geektrust.util.MaintainabilityConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,19 @@ public class TrainService {
 
     public Train createTrain(List<String> tokens) {
         validationService.validateTrainTokens(tokens);
-        String trainId = tokens.get(0);
-        List<String> stationCodes = new ArrayList<>(tokens.subList(1, tokens.size()));
+        String trainId = extractTrainId(tokens);
+        List<String> stationCodes = extractStationCodes(tokens);
 
         return Train.createFromTokens(trainId, stationCodes);
+    }
+    
+    private String extractTrainId(List<String> tokens) {
+        return tokens.get(MaintainabilityConstants.TRAIN_ID_TOKEN_INDEX);
+    }
+    
+    private List<String> extractStationCodes(List<String> tokens) {
+        int startIndex = MaintainabilityConstants.TRAIN_ID_TOKEN_INDEX + 1;
+        return new ArrayList<>(tokens.subList(startIndex, tokens.size()));
     }
 
     private Train findTrain(List<Train> trains, String id) {
@@ -33,19 +43,31 @@ public class TrainService {
     }
 
     public void generateOutput(List<Train> trains) {
+        Journey journey = createJourney(trains);
+        
+        printArrivalResults(journey);
+        printDepartureResults(journey);
+    }
+    
+    private Journey createJourney(List<Train> trains) {
         Train trainA = findTrain(trains, TrainConstants.TRAIN_A);
         Train trainB = findTrain(trains, TrainConstants.TRAIN_B);
-
-        Journey journey = new Journey(trainA, trainB);
-        
+        return new Journey(trainA, trainB);
+    }
+    
+    private void printArrivalResults(Journey journey) {
         TrainArrival arrival = journey.processArrival();
         arrival.getArrivedTrains().forEach(printerService::printArrival);
-
+    }
+    
+    private void printDepartureResults(Journey journey) {
         TrainDeparture departure = journey.processDeparture();
+        
         if (departure.isJourneyEnded()) {
             printerService.printJourneyEnded();
-        } else {
-            printerService.printDeparture(departure.getTrain());
+            return;
         }
+        
+        printerService.printDeparture(departure.getTrain());
     }
 }

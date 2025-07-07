@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.geektrust.util.MaintainabilityConstants;
+
 public class Train {
     private final String trainId;
     private final List<Bogie> bogies;
@@ -36,7 +38,7 @@ public class Train {
 
 
     public boolean hasInsufficientBogies() {
-        return bogies.size() <= 2;
+        return bogies.size() <= MaintainabilityConstants.MINIMUM_BOGIES_FOR_JOURNEY;
     }
 
     public String getTrainId() {

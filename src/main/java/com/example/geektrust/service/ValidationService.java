@@ -2,19 +2,34 @@ package com.example.geektrust.service;
 
 import com.example.geektrust.model.Train;
 import com.example.geektrust.util.TrainConstants;
+import com.example.geektrust.util.MaintainabilityConstants;
 
 import java.util.List;
 
-/**
- * Performs validation on trains and input tokens.
- */
 public class ValidationService {
 
     public void validateTrainTokens(List<String> tokens) {
+        validateTokensNotNullOrEmpty(tokens);
+        validateMinimumTokenCount(tokens);
+        validateEngineToken(tokens);
+    }
+    
+    private void validateTokensNotNullOrEmpty(List<String> tokens) {
         if (tokens == null || tokens.isEmpty()) {
             throw new IllegalArgumentException("Input tokens cannot be null or empty");
         }
-        if (tokens.size() < 2 || !TrainConstants.ENGINE.equals(tokens.get(1))) {
+    }
+    
+    private void validateMinimumTokenCount(List<String> tokens) {
+        if (tokens.size() < MaintainabilityConstants.MINIMUM_TRAIN_TOKENS) {
+            throw new IllegalArgumentException("Invalid format: minimum " + 
+                MaintainabilityConstants.MINIMUM_TRAIN_TOKENS + " tokens required");
+        }
+    }
+    
+    private void validateEngineToken(List<String> tokens) {
+        String engineToken = tokens.get(MaintainabilityConstants.ENGINE_TOKEN_INDEX);
+        if (!TrainConstants.ENGINE.equals(engineToken)) {
             throw new IllegalArgumentException("Invalid format: first bogie must be ENGINE");
         }
     }
