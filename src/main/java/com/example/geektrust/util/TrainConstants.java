@@ -1,8 +1,5 @@
 package com.example.geektrust.util;
 
-/**
- * Common constants used across the train application.
- */
 public final class TrainConstants {
     public static final String ENGINE = "ENGINE";
     public static final String TRAIN_A = "TRAIN_A";

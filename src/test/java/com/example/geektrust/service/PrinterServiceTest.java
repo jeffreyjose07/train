@@ -30,7 +30,7 @@ class PrinterServiceTest {
 
     @Test
     void printArrivalShouldOutputArrivalLine() {
-        Train train = new Train("TRAIN_A", Arrays.asList("ENGINE", "NDL"));
+        Train train = Train.createFromTokens("TRAIN_A", Arrays.asList("ENGINE", "NDL"));
         printer.printArrival(train);
         assertEquals("ARRIVAL TRAIN_A ENGINE NDL\n", out.toString());
     }

@@ -21,7 +21,7 @@ class ValidationServiceTest {
 
     @Test
     void ensureBothTrainsPresentShouldThrowWhenMissingTrain() {
-        List<Train> trains = Collections.singletonList(new Train("TRAIN_A", Arrays.asList("ENGINE")));
+        List<Train> trains = Collections.singletonList(Train.createFromTokens("TRAIN_A", Arrays.asList("ENGINE")));
         assertThrows(IllegalArgumentException.class, () -> validator.ensureBothTrainsPresent(trains));
     }
 }

@@ -2,9 +2,6 @@ package com.example.geektrust.service;
 
 import com.example.geektrust.model.Train;
 
-/**
- * Handles printing of train details to STDOUT.
- */
 public class PrinterService {
 
     public void printArrival(Train train) {

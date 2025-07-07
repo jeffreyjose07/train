@@ -39,8 +39,8 @@ class TrainServiceTest {
 
     @Test
     void generateOutputShouldPrintArrivalAndDeparture() {
-        Train a = new Train(TrainConstants.TRAIN_A, Arrays.asList("ENGINE", "NDL", "GHY"));
-        Train b = new Train(TrainConstants.TRAIN_B, Arrays.asList("ENGINE", "PTA"));
+        Train a = Train.createFromTokens(TrainConstants.TRAIN_A, Arrays.asList("ENGINE", "NDL", "GHY"));
+        Train b = Train.createFromTokens(TrainConstants.TRAIN_B, Arrays.asList("ENGINE", "PTA"));
         service.generateOutput(Arrays.asList(a, b));
         String[] lines = outContent.toString().trim().split("\n");
         assertEquals("ARRIVAL TRAIN_A ENGINE NDL GHY", lines[0].trim());
@@ -51,8 +51,8 @@ class TrainServiceTest {
     @Test
     void generateOutputShouldPrintJourneyEndedWhenNoBogiesRemain() {
         outContent.reset();
-        Train a = new Train(TrainConstants.TRAIN_A, Arrays.asList("ENGINE"));
-        Train b = new Train(TrainConstants.TRAIN_B, Arrays.asList("ENGINE"));
+        Train a = Train.createFromTokens(TrainConstants.TRAIN_A, Arrays.asList("ENGINE"));
+        Train b = Train.createFromTokens(TrainConstants.TRAIN_B, Arrays.asList("ENGINE"));
         service.generateOutput(Arrays.asList(a, b));
         String[] lines = outContent.toString().trim().split("\n");
         assertEquals("ARRIVAL TRAIN_A ENGINE", lines[0].trim());
