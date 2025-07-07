@@ -2,6 +2,7 @@ package com.example.geektrust.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.example.geektrust.util.MaintainabilityConstants;
@@ -18,7 +19,7 @@ public class Train {
     public static Train createFromTokens(String trainId, List<String> stationCodes) {
         List<Bogie> bogies = stationCodes.stream()
                 .map(Bogie::createFromCode)
-                .filter(bogie -> bogie != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         return new Train(trainId, bogies);
     }
